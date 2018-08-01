@@ -4,23 +4,30 @@ public class Strings {
 
     public static void main(final String[] args) {
         for (int i = 1; i < 1e8; i *= 10) {
-            long elapsed = -System.currentTimeMillis();
+            System.out.println("Testing with " + i + " iterations");
 
+            long elapsed = -System.currentTimeMillis();
             for (int j = 0; j < i; j++) {
                 testStringFormat("a", "b", "c", "d");
             }
-
-            System.out.println("String format " + i + " times took "
+            System.out.println("String.format: "
                     + (elapsed + System.currentTimeMillis()) + "ms");
 
             elapsed = -System.currentTimeMillis();
-
             for (int j = 0; j < i; j++) {
                 testStringConcatenation("a", "b", "c", "d");
             }
-
-            System.out.println("String concatenation " + i + " times took "
+            System.out.println("String concatenation: "
                     + (elapsed + System.currentTimeMillis()) + "ms");
+
+            elapsed = -System.currentTimeMillis();
+            for (int j = 0; j < i; j++) {
+                testStringBuilder("a", "b", "c", "d");
+            }
+            System.out.println("StringBuilder: "
+                    + (elapsed + System.currentTimeMillis()) + "ms");
+
+            System.out.println();
         }
     }
 
@@ -30,6 +37,18 @@ public class Strings {
 
     private static String testStringConcatenation(final String ... pieces) {
         return pieces[0] + "-" + pieces[1] + "-" + pieces[2] + "-" + pieces[3];
+    }
+
+    private static String testStringBuilder(final String ... pieces) {
+        return new StringBuilder()
+                .append(pieces[0])
+                .append("-")
+                .append(pieces[1])
+                .append("-")
+                .append(pieces[2])
+                .append("-")
+                .append(pieces[3])
+                .toString();
     }
 
 }
